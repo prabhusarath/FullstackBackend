@@ -1,0 +1,14 @@
+{
+  "name": "expressanimals",
+  "version": "1.0.0",
+  "description": "Application about routing",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sarath Kumar Prabhakaran",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
