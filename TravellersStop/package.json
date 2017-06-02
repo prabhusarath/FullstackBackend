@@ -1,7 +1,7 @@
 {
   "name": "travellersstop",
   "version": "1.0.0",
-  "description": "A Place to Explore Attractions n a Particular City.",
+  "description": "A Place to Explore Attractions n a Particular Place.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
