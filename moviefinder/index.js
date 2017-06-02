@@ -1,14 +1,21 @@
 var apps = require('express')();
 var reqq = require('request');
 
+apps.set("view engine","ejs");
+
+apps.get("/",function(req,res){
+  res.render("sarath");
+});
+
 apps.get("/results",function(req,res){
-   reqq('http://www.omdbapi.com/?s=Star&apikey=thewdb', function (error, response, body) {
-  if(error){
-      console.log('error:', error);
-  }else{
-  var parsedmovie = JSON.parse(body);
-  res.send(parsedmovie['Search'][0])
-}});
+  var movie_search = req.query.movie;   
+  
+  var url = "http://www.omdbapi.com/?s="+ movie_search + "&apikey=thewdb";
+  
+  reqq(url, function (error, response, body) {
+  var data = JSON.parse(body);
+  res.render("search",{ResMovies: data});
+})
 });
 
 
