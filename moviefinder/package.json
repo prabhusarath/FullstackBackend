@@ -1,0 +1,16 @@
+{
+  "name": "moviefinder",
+  "version": "1.0.0",
+  "description": "Movie Search Application using the movie finder API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sarath Kumar Prabhakaran",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.3",
+    "request": "^2.81.0"
+  }
+}
