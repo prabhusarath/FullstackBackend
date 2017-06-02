@@ -1,6 +1,13 @@
+<%- include partials/header %>
+
 <h4> images Worked Proeprly !!</h4>
+
+<a href="/places/new"> New Places Can Be Added Here !!</a>
 
 <% ResPlaces.forEach(function(mov){ %>
     <li> <%= mov["name"] %> </li>
     <img src=<%= mov["image"] %> > 
 <% }) %>
+
+
+<%- include partials/footer %>
