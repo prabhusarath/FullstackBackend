@@ -1,13 +1,29 @@
 <%- include partials/header %>
 
-<h4> images Worked Proeprly !!</h4>
+<div class="container">
+        <header class="jumbotron">
+            <div class="container">
+                <h1> Welcome to TravellersStop!!</h1>
+                <p> Lets Explore the Destiations !!</p>
+            </div>
+        </header>
+        <p><a class="btn btn-success btn-sm" href="/places/new"> New Places Can Be Added Here !!</a> </p>
 
-<a href="/places/new"> New Places Can Be Added Here !!</a>
+  <div class="row text-center" style="display:flex; flex-wrap:wrap;">
+    <% ResPlaces.forEach(function(mov){ %>
+    <div class="col-md-3 col-sm-6">
+        <div class="thumbnail">
+            <img src=<%= mov["image"] %> > 
+                <div class="caption">
+                    <h4> <%= mov["name"] %> </h4>
+                </div>
+        </div>
+        
+    </div>
+        <% }) %>
+  </div>
 
-<% ResPlaces.forEach(function(mov){ %>
-    <li> <%= mov["name"] %> </li>
-    <img src=<%= mov["image"] %> > 
-<% }) %>
 
 
+</div>
 <%- include partials/footer %>

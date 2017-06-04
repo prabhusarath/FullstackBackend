@@ -1,13 +1,31 @@
+<div class="container">
+    
 <%- include partials/header %>
 
-<h4> Enter Newly Found Destinations !!</h4>
+<!--<h4> Enter Newly Found Destinations !!</h4>-->
 
-<form action="/places" method="post"> 
-  <input type="text" name="dest" placeholder="Destination"/>
-  <input type="text" name="imgsrc" placeholder="Images"/>
-  <input type="submit" />
+<!--<form action="/places" method="post"> -->
+<!--  <input type="text" name="dest" placeholder="Destination"/>-->
+<!--  <input type="text" name="imgsrc" placeholder="Images"/>-->
+<!--  <input type="submit" />-->
+<!--</form>-->
+
+<!--<a href="/places"> Back !!</a>-->
+
+<header class="jumbotron">
+<form style="width:500px; margin: 0 auto; align:center;" action="/places" method="post">
+  <div class="form-group">
+    <label for="exampleInputDestination">Destination</label>
+    <input type="text" class="form-control" name="dest" placeholder="Destination">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputImage">Image of Destination</label>
+    <input type="text" class="form-control" name="imgsrc" placeholder="Images">
+  </div>
+  <button type="submit" class="btn btn-md btn-success">Submit</button>
 </form>
-
-<a href="/places"> Back !!</a>
-
+<a href="/places"> <button type="submit" class="btn btn-md btn-info">Move Back </button></a>
+</header>
 <%- include partials/footer %>
+
+</div>
