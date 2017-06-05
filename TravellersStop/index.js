@@ -1,21 +1,19 @@
 var express = require("express");
 var app = express();
 var bodyparser = require("body-parser");
+var mongoose = require("mongoose");
 
+mongoose.connect("mongodb://localhost/travellers_stop");
 app.set("view engine","ejs");
 app.use(bodyparser.urlencoded({extended: true}));
 
-var places = [
-      {name: "3145",image:"https://farm4.staticflickr.com/3872/14435096036_39db8f04bc.jpg"},
-      {name: "3245",image:"https://farm6.staticflickr.com/5181/5641024448_04fefbb64d.jpg"},
-      {name: "3345",image:"https://farm9.staticflickr.com/8161/7360193870_cc7945dfea.jpg"},{name: "3145",image:"https://farm4.staticflickr.com/3872/14435096036_39db8f04bc.jpg"},
-      {name: "3245",image:"https://farm6.staticflickr.com/5181/5641024448_04fefbb64d.jpg"},
-      {name: "3345",image:"https://farm9.staticflickr.com/8161/7360193870_cc7945dfea.jpg"},{name: "3145",image:"https://farm4.staticflickr.com/3872/14435096036_39db8f04bc.jpg"},
-      {name: "3245",image:"https://farm6.staticflickr.com/5181/5641024448_04fefbb64d.jpg"},
-      {name: "3345",image:"https://farm9.staticflickr.com/8161/7360193870_cc7945dfea.jpg"},{name: "3145",image:"https://farm4.staticflickr.com/3872/14435096036_39db8f04bc.jpg"},
-      {name: "3245",image:"https://farm6.staticflickr.com/5181/5641024448_04fefbb64d.jpg"},
-      {name: "3345",image:"https://farm9.staticflickr.com/8161/7360193870_cc7945dfea.jpg"}
-      ];
+var schemas =new mongoose.Schema({
+  name:String,
+  image:String
+});
+
+var TravelStop = mongoose.model("TravelStop",schemas);
+
 
 app.get("/",function(req,res){
   res.render("home");
@@ -23,7 +21,14 @@ app.get("/",function(req,res){
 
 
 app.get("/places",function(req,res){
-  res.render("places",{ResPlaces: places});
+     TravelStop.find({},function(err,ans){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("places",{ResPlaces: ans});
+        }
+    });
+  
 });
 
 
@@ -32,10 +37,17 @@ app.post("/places",function(req,res){
     var imgvalues = req.body.imgsrc;
     var newobj = {name: namevalues,image:imgvalues}
     
-     places.push(newobj);
-     res.redirect("/places");
-
-});
+    TravelStop.create(newobj,function(err,ans){
+        if(err){
+            console.log(err);
+        } else {
+            //res.render("places",{ResPlaces: ans});
+            console.log("Campground Added Successfully");
+            res.redirect("/places");
+        }
+    });
+    
+    });
 
 app.get("/places/new",function(req,res){
   res.render("newplaces");
