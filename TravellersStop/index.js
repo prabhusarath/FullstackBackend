@@ -9,10 +9,26 @@ app.use(bodyparser.urlencoded({extended: true}));
 
 var schemas =new mongoose.Schema({
   name:String,
-  image:String
+  image:String,
+  descp:String
 });
 
 var TravelStop = mongoose.model("TravelStop",schemas);
+
+// TravelStop.create({
+//     name:"Sarath",
+//     image:"https://farm2.staticflickr.com/1363/1342367857_2fd12531e7.jpg",
+//     descp:"Hello From Sarath"
+    
+// },function(err,aa){
+//   if(err){
+//       console.log("Wrong");
+//   }
+//   else{
+//       console.log("Okay");
+//       console.log(aa);
+//   }
+//   });
 
 
 app.get("/",function(req,res){
@@ -35,7 +51,8 @@ app.get("/places",function(req,res){
 app.post("/places",function(req,res){
     var namevalues = req.body.dest;
     var imgvalues = req.body.imgsrc;
-    var newobj = {name: namevalues,image:imgvalues}
+    var dee = req.body.descp;
+    var newobj = {name: namevalues,image:imgvalues,descp:dee}
     
     TravelStop.create(newobj,function(err,ans){
         if(err){
@@ -51,6 +68,20 @@ app.post("/places",function(req,res){
 
 app.get("/places/new",function(req,res){
   res.render("newplaces");
+});
+
+app.get("/places/:id",function(req,res){
+    
+    TravelStop.findById(req.params.id,function(err,found){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("shows",{ccc: found});
+        }
+    });
+    
+    
+  
 });
 
 app.listen(process.env.PORT,process.env.IP,function(){
