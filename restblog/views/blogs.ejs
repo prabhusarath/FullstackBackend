@@ -4,7 +4,7 @@
     <div>
         <h2><%= b.title %></h2>
         <img src="<%= b.image %>">
-        <p><%= b.body.substring(0,50) %>...</p>
+        <p><%= b.body %>...</p>
         <span><%= b.creation %></span>
         <button class="ui button" type="submit"><a href="/blogs/<%= b._id %>">Read More</a></button>
     </div>

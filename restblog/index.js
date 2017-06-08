@@ -1,4 +1,5 @@
 var express = require("express"),
+methodOveride = require("method-override"),
 mongoose = require("mongoose"),
 bodyParser =require("body-parser");
 
@@ -9,6 +10,7 @@ mongoose.connect("mongodb://localhost/blogs");
 exapp.set("view engine","ejs");
 exapp.use(express.static("public"));
 exapp.use(bodyParser.urlencoded({extended: true}));
+exapp.use(methodOveride("_method"));
 
 var blogs = new mongoose.Schema({
    title: String,
@@ -72,6 +74,7 @@ exapp.get("/blogs/:id",function(req,res){
     
 });
 
+//edit route
 exapp.get("/blogs/:id/edit",function(req,res){
     blogvar.findById(req.params.id,function(err,found){
         if(err){
@@ -79,6 +82,28 @@ exapp.get("/blogs/:id/edit",function(req,res){
             res.redirect("/blogs");
         } else {
             res.render("editblogs",{blogss: found});
+        }
+    });
+});
+
+//update route
+exapp.put("/blogs/:id",function(req,res){
+    blogvar.findByIdAndUpdate(req.params.id,req.body.blogss,function(err,found){
+        if(err){
+            console.log(err);
+            res.redirect("/blogs");
+        } else {
+            res.redirect("/blogs/"+req.params.id);
+        }
+    });
+});
+
+exapp.delete("/blogs/:id",function(req,res){
+    blogvar.findByIdAndRemove(req.params.id,function(err,found){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("/blogs");
         }
     });
 });
