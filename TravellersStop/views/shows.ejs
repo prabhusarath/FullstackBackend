@@ -6,4 +6,11 @@
 
 <p><%= ccc.descp %></p>
 
+<% ccc.views.forEach(function(vws){ %>
+    <p>
+        <strong><%= vws.comment %> by <%= vws.traveller %> </strong>
+    </p>
+    
+<% }) %>
+
 <%- include partials/footer %>

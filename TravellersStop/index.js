@@ -2,33 +2,14 @@ var express = require("express");
 var app = express();
 var bodyparser = require("body-parser");
 var mongoose = require("mongoose");
+var TravelStop = require("./models/travel");
+var popdata = require("./dbdata");
 
 mongoose.connect("mongodb://localhost/travellers_stop");
 app.set("view engine","ejs");
 app.use(bodyparser.urlencoded({extended: true}));
 
-var TravelStop = require("./models/travel");
-
-// TravelStop.create({
-//     name:"Sarath",
-//     image:"https://farm2.staticflickr.com/1363/1342367857_2fd12531e7.jpg",
-//     descp:"Hello From Sarath"
-    
-// },function(err,aa){
-//   if(err){
-//       console.log("Wrong");
-//   }
-//   else{
-//       console.log("Okay");
-//       console.log(aa);
-//   }
-//   });
-
-
-app.get("/",function(req,res){
-  res.render("home");
-});
-
+popdata();
 
 app.get("/places",function(req,res){
      TravelStop.find({},function(err,ans){
@@ -66,16 +47,13 @@ app.get("/places/new",function(req,res){
 
 app.get("/places/:id",function(req,res){
     
-    TravelStop.findById(req.params.id,function(err,found){
+    TravelStop.findById(req.params.id).populate("views").exec(function(err,found){
         if(err){
             console.log(err);
         } else {
             res.render("shows",{ccc: found});
         }
     });
-    
-    
-  
 });
 
 app.listen(process.env.PORT,process.env.IP,function(){
