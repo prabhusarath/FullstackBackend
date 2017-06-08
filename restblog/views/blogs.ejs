@@ -1,13 +1,12 @@
 <% include ./partials/header %>
 
-<h1> Lets Play with SemanticUI </h1>
-
 <% blogdata.forEach(function(b){ %>
     <div>
         <h2><%= b.title %></h2>
         <img src="<%= b.image %>">
-        <p><%= b.body %></p>
+        <p><%= b.body.substring(0,50) %>...</p>
         <span><%= b.creation %></span>
+        <button class="ui button" type="submit"><a href="/blogs/<%= b._id %>">Read More</a></button>
     </div>
 <%   } ) %>
 

@@ -19,11 +19,12 @@ var blogs = new mongoose.Schema({
 
 var blogvar = mongoose.model("blogitem",blogs);
 
-exapp.get("/",function(req,res){
-    res.render("blogs");
+// exapp.get("/",function(req,res){
+//     //res.render("blogs");
     
-});
+// });
 
+//INDEX
 exapp.get("/blogs",function(req,res){
     //res.render("blogs");
     blogvar.find({},function(err,data){
@@ -36,18 +37,51 @@ exapp.get("/blogs",function(req,res){
     
 });
 
+// nEW rOUTE
+exapp.get("/blogs/new",function(req,res){
+  res.render("newblogs");
+});
 
-// exapp.post("/blogs",function(req,res){
-
-//     });
-
-// exapp.get("/places/new",function(req,res){
-//   res.render("newplaces");
-// });
-
-// exapp.get("/places/:id",function(req,res){
+// POST nEW rOUTE
+exapp.post("/blogs",function(req,res){
     
-// });
+blogvar.create(req.body.blog,function(err,ans){
+        if(err){
+            console.log(err);
+            res.render("newblogs");
+        } else {
+            //res.render("places",{ResPlaces: ans});
+            console.log(ans);
+            res.redirect("/blogs");
+        }
+    });
+    
+    });
+
+exapp.get("/blogs/:id",function(req,res){
+    //res.send("Hello Toufeeq")
+    
+    blogvar.findById(req.params.id,function(err,found){
+        if(err){
+            console.log(err);
+            res.redirect("/blogs");
+        } else {
+            res.render("showsblogs",{ccc: found});
+        }
+    });
+    
+});
+
+exapp.get("/blogs/:id/edit",function(req,res){
+    blogvar.findById(req.params.id,function(err,found){
+        if(err){
+            console.log(err);
+            res.redirect("/blogs");
+        } else {
+            res.render("editblogs",{blogss: found});
+        }
+    });
+});
 
 exapp.listen(process.env.PORT,process.env.IP,function(){
    console.log("Travellers Stop has Started Successfully!!");

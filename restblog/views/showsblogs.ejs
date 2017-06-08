@@ -1,0 +1,18 @@
+<% include ./partials/header %>
+
+<div class="ui main text container segment">
+  <div class="ui huge header"><%= ccc.title %></div>
+       <div class="ui top attached ">  
+       <div class="item">
+          <img class="ui centered rounded image" src="<%= ccc.image %>">
+          <div class="content">
+              <span><%= ccc.creation.toDateString() %></span>
+          </div>
+          <div class="description">
+              <p><%= ccc.body %></p>
+          </div>
+        </div>
+    </div>
+ </div>
+
+<% include ./partials/footer %>
