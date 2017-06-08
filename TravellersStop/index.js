@@ -7,13 +7,7 @@ mongoose.connect("mongodb://localhost/travellers_stop");
 app.set("view engine","ejs");
 app.use(bodyparser.urlencoded({extended: true}));
 
-var schemas =new mongoose.Schema({
-  name:String,
-  image:String,
-  descp:String
-});
-
-var TravelStop = mongoose.model("TravelStop",schemas);
+var TravelStop = require("./models/travel");
 
 // TravelStop.create({
 //     name:"Sarath",
