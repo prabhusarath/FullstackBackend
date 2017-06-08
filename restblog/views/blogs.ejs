@@ -1,0 +1,10 @@
+<h1> Lets Play with SemanticUI </h1>
+
+<% blogdata.forEach(function(b){ %>
+    <div>
+        <h2><%= b.title %></h2>
+        <img src="<%= b.image %>">
+        <p><%= b.body %></p>
+        <span><%= b.creation %></span>
+    </div>
+<%   } ) %>
