@@ -1,0 +1,32 @@
+<%- include partials/header %>
+
+<div class="container">
+        <header class="jumbotron">
+            <div class="container">
+                <h1> Welcome to TravellersStop!!</h1>
+                <p> Lets Explore the Destiations !!</p>
+            </div>
+        </header>
+        <p><a class="btn btn-success btn-sm" href="/places/new"> New Places Can Be Added Here !!</a> </p>
+
+  <div class="row text-center" style="display:flex; flex-wrap:wrap;">
+    <% ResPlaces.forEach(function(mov){ %>
+    <div class="col-md-3 col-sm-6">
+        <div class="thumbnail">
+            <img src=<%= mov.image %> > 
+                <div class="caption">
+                    <h4> <%= mov.name %> </h4>
+                </div>
+                <p>
+                    <a href="/places/<%= mov._id%>" class="btn btn-primary"> More Info</a>
+                </p>
+        </div>
+        
+    </div>
+        <% }) %>
+  </div>
+
+
+
+</div>
+<%- include partials/footer %>

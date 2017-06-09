@@ -31,29 +31,34 @@ var datacamp = [{
               console.log("Date DELETE Error");
           }
           else{
-          console.log("Data Clean Success");
-            datacamp.forEach(function(datad){
-              TravelStop.create(datad,function(err,datades){
-              if(err){
-                  console.log("Wrong");
-              }else{
-                  console.log("Data Added Success");
-                    Comment.create({
-                        comment:"Place is Nice !!",
-                        traveller:"Sarath Prabhakaran"
-                    },function(err,comm){
-                          if(err){
-                              console.log("Error Comment");
-                          }else{
-                              datades.views.push(comm);
-                              datades.save();
-                              console.log("Comments Added Success");
-                          }
-                          });
-              }
-                  
-              });
-          }); 
+          console.log("Data Cleaned");
+          
+                    datacamp.forEach(function(datad){
+                              TravelStop.create(datad,function(err,datades){
+                                      if(err)
+                                          {
+                                              console.log("Wrong");
+                                          }
+                                      else
+                                            {
+                                                  console.log("Data Added Success");
+                                                    
+                                                    Comment.create({
+                                                                    comment:"Place is Nice !!",
+                                                                    traveller:"Sarath Prabhakaran"
+                                                                },function(err,comm){
+                                                                  if(err){
+                                                                      console.log("Error Comment");
+                                                                  }else{
+                                                                      datades.views.push(comm);
+                                                                      datades.save();
+                                                                      console.log("Comments Added Success");
+                                                                  }
+                                                                  });
+                                            }
+                                  
+                              });
+                  }); 
         }
     });
 }

@@ -46,7 +46,6 @@ app.get("/places/new",function(req,res){
 });
 
 app.get("/places/:id",function(req,res){
-    
     TravelStop.findById(req.params.id).populate("views").exec(function(err,found){
         if(err){
             console.log(err);
@@ -54,6 +53,14 @@ app.get("/places/:id",function(req,res){
             res.render("shows",{ccc: found});
         }
     });
+});
+
+app.get("/places/:id/comments",function(req,res){
+    res.render("comments/comments");
+});
+
+app.get("/places/:id/comments/new",function(req,res){
+    res.render("comments/newcomments");
 });
 
 app.listen(process.env.PORT,process.env.IP,function(){
