@@ -1,20 +1,45 @@
 <%- include ../partials/header %>
 
-<h1><%= ccc.name %></h1>
+<div class="container">
+        <div>
+            <div class="col-md-3"
+                <p class="lead"> Travellers Stop </p>
+                <div class="list-group">
+                    <li class="list-group-item active">Info 1</li>
+                    <li class="list-group-item">Info 2</li>
+                    <li class="list-group-item">Info 3</li>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="thumbnail">
+                    <img class="img-responive" src="<%= ccc.image %>">
+                    <div class="caption-full">
+                            <div class="pull-right"> $ 3.00/night </div>
+                            <h4><a><%= ccc.name %></a></h4>
+                            <p><%= ccc.descp %> </p>
+                    </div>
+                </div>
+                <div class="well">
+                    <div class="text-right">
+                        <a class="btn btn-success" href="/places/<%= ccc._id %>/comments/new"> Add Comment </a>
+                    </div>
+                    <hr>
+                    <% ccc.views.forEach(function(vws){ %>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <Strong><%= vws.traveller %></Strong>
+                                <span class="pull-right"> 3 Days Ago </span>
+                                <p>
+                                    <%= vws.comment %> 
+                                </p>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+</div>
 
-<img src="<%= ccc.image %>">
 
-<p><%= ccc.descp %></p>
-
-<p>
-    <a class="btn btn-success" href="/places/<%= ccc._id %>/comments/new"> Add Comment </a>
-</p>
-
-<% ccc.views.forEach(function(vws){ %>
-    <p>
-        <strong><%= vws.comment %> by <%= vws.traveller %> </strong>
-    </p>
-    
-<% }) %>
 
 <%- include ../partials/footer %>

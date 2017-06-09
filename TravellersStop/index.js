@@ -8,6 +8,7 @@ var popdata = require("./dbdata");
 
 mongoose.connect("mongodb://localhost/travellers_stop");
 app.set("view engine","ejs");
+app.use(express.static(__dirname + "/public"));
 app.use(bodyparser.urlencoded({extended: true}));
 
 popdata();
