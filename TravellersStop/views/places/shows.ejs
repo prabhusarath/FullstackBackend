@@ -1,10 +1,14 @@
-<%- include partials/header %>
+<%- include ../partials/header %>
 
 <h1><%= ccc.name %></h1>
 
 <img src="<%= ccc.image %>">
 
 <p><%= ccc.descp %></p>
+
+<p>
+    <a class="btn btn-success" href="/places/<%= ccc._id %>/comments/new"> Add Comment </a>
+</p>
 
 <% ccc.views.forEach(function(vws){ %>
     <p>
@@ -13,4 +17,4 @@
     
 <% }) %>
 
-<%- include partials/footer %>
+<%- include ../partials/footer %>

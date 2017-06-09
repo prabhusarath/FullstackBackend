@@ -3,6 +3,7 @@ var app = express();
 var bodyparser = require("body-parser");
 var mongoose = require("mongoose");
 var TravelStop = require("./models/travel");
+var comments = require("./models/comments");
 var popdata = require("./dbdata");
 
 mongoose.connect("mongodb://localhost/travellers_stop");
@@ -16,7 +17,7 @@ app.get("/places",function(req,res){
         if(err){
             console.log(err);
         } else {
-            res.render("places",{ResPlaces: ans});
+            res.render("places/places",{ResPlaces: ans});
         }
     });
   
@@ -35,14 +36,14 @@ app.post("/places",function(req,res){
         } else {
             //res.render("places",{ResPlaces: ans});
             console.log("Campground Added Successfully");
-            res.redirect("/places");
+            res.redirect("places/places");
         }
     });
     
     });
 
 app.get("/places/new",function(req,res){
-  res.render("newplaces");
+  res.render("places/newplaces");
 });
 
 app.get("/places/:id",function(req,res){
@@ -50,17 +51,41 @@ app.get("/places/:id",function(req,res){
         if(err){
             console.log(err);
         } else {
-            res.render("shows",{ccc: found});
+            res.render("places/shows",{ccc: found});
         }
     });
 });
 
-app.get("/places/:id/comments",function(req,res){
-    res.render("comments/comments");
+app.get("/places/:id/comments/new",function(req,res){
+    TravelStop.findById(req.params.id,function(err,ans){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("comments/newcomments",{views:ans});
+        }
+    });
 });
 
-app.get("/places/:id/comments/new",function(req,res){
-    res.render("comments/newcomments");
+app.post("/places/:id/comments",function(req,res){
+    TravelStop.findById(req.params.id,function(err,ans){
+        if(err){
+            res.redirect("/places");
+        } else 
+        {
+                        console.log(req.body.view);
+                        comments.create(req.body.view,function(err,viewans){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            ans.views.push(viewans);
+                            ans.save();
+                            res.redirect("/places/"+ans._id);
+                        }
+                        });
+        }
+    });
+    
+    
 });
 
 app.listen(process.env.PORT,process.env.IP,function(){
