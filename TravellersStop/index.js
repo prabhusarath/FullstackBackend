@@ -9,11 +9,17 @@ var comments = require("./models/comments");
 var User = require("./models/user");
 var popdata = require("./dbdata");
 
+
+var placesRoutes = require("./routes/places.js"),
+    appRoutes = require("./routes/app.js"),
+    userRoutes = require("./routes/user_comments.js");
+
 mongoose.connect("mongodb://localhost/travellers_stop");
 app.set("view engine","ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyparser.urlencoded({extended: true}));
 popdata();
+
 
 
 app.use(require("express-session")({
@@ -28,130 +34,14 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
 app.use(function(req,res,next){
    res.locals.currUser = req.user; 
    next();
 });
 
-app.get("/places",function(req,res){
-    //console.log(req.user);
-     TravelStop.find({},function(err,ans){
-        if(err){
-            console.log(err);
-        } else {
-            res.render("places/places",{ResPlaces: ans});
-        }
-    });
-  
-});
-
-
-app.post("/places",function(req,res){
-    var namevalues = req.body.dest;
-    var imgvalues = req.body.imgsrc;
-    var dee = req.body.descp;
-    var newobj = {name: namevalues,image:imgvalues,descp:dee}
-    
-    TravelStop.create(newobj,function(err,ans){
-        if(err){
-            console.log(err);
-        } else {
-            //res.render("places",{ResPlaces: ans});
-            console.log("Campground Added Successfully");
-            res.redirect("places/places");
-        }
-    });
-    
-    });
-
-app.get("/places/new",function(req,res){
-  res.render("places/newplaces");
-});
-
-app.get("/places/:id",function(req,res){
-    TravelStop.findById(req.params.id).populate("views").exec(function(err,found){
-        if(err){
-            console.log(err);
-        } else {
-            res.render("places/shows",{ccc: found});
-        }
-    });
-});
-
-app.get("/places/:id/comments/new",isLoggedIn ,function(req,res){
-    TravelStop.findById(req.params.id,function(err,ans){
-        if(err){
-            console.log(err);
-        } else {
-            res.render("comments/newcomments",{views:ans});
-        }
-    });
-});
-
-app.post("/places/:id/comments",isLoggedIn,function(req,res){
-    TravelStop.findById(req.params.id,function(err,ans){
-        if(err){
-            res.redirect("/places");
-        } else 
-        {
-                        console.log(req.body.view);
-                        comments.create(req.body.view,function(err,viewans){
-                        if(err){
-                            console.log(err);
-                        } else {
-                            ans.views.push(viewans);
-                            ans.save();
-                            res.redirect("/places/"+ans._id);
-                        }
-                        });
-        }
-    });
-    
-    
-});
-
-app.get("/register",function(req, res) {
-   res.render("register"); 
-});
-
-app.post("/register",function(req, res) {
-   var usname = new User({username: req.body.username});
-   User.register(usname, req.body.password, function(err,ans){
-        if(err){
-            console.log(err);
-            res.render("register");
-        } else {
-            passport.authenticate("local")(req,res,function(){
-                res.redirect("/places");
-            })
-        }
-    });
-});
-
-app.get("/login",function(req, res) {
-    res.render("login");
-});
-
-app.post("/login",passport.authenticate("local",
-    {
-    successRedirect: "/places",
-    failureRedirect: "/login" }),function(req, res) {
- 
-});
-
-
-app.get("/logout",function(req, res){
-    req.logout();
-    res.redirect("/places");
-});
-
-function isLoggedIn(req,res,next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-};
+app.use(appRoutes);
+app.use(placesRoutes);
+app.use(userRoutes);
 
 app.listen(process.env.PORT,process.env.IP,function(){
    console.log("Travellers Stop has Started Successfully!!");
