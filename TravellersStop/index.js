@@ -75,7 +75,7 @@ app.get("/places/:id",function(req,res){
     });
 });
 
-app.get("/places/:id/comments/new",function(req,res){
+app.get("/places/:id/comments/new",isLoggedIn ,function(req,res){
     TravelStop.findById(req.params.id,function(err,ans){
         if(err){
             console.log(err);
@@ -85,7 +85,7 @@ app.get("/places/:id/comments/new",function(req,res){
     });
 });
 
-app.post("/places/:id/comments",function(req,res){
+app.post("/places/:id/comments",isLoggedIn,function(req,res){
     TravelStop.findById(req.params.id,function(err,ans){
         if(err){
             res.redirect("/places");
@@ -129,9 +129,25 @@ app.get("/login",function(req, res) {
     res.render("login");
 });
 
-app.post("/login",function(req, res) {
+app.post("/login",passport.authenticate("local",
+    {
+    successRedirect: "/places",
+    failureRedirect: "/login" }),function(req, res) {
  
 });
+
+
+app.get("/logout",function(req, res){
+    req.logout();
+    res.redirect("/places");
+});
+
+function isLoggedIn(req,res,next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+};
 
 app.listen(process.env.PORT,process.env.IP,function(){
    console.log("Travellers Stop has Started Successfully!!");
