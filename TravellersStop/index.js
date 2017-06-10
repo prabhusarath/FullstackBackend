@@ -2,6 +2,7 @@ var express = require("express");
 var app = express();
 var bodyparser = require("body-parser");
 var mongoose = require("mongoose");
+var passport = require("passport");
 var TravelStop = require("./models/travel");
 var comments = require("./models/comments");
 var popdata = require("./dbdata");
