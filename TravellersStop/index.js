@@ -3,16 +3,33 @@ var app = express();
 var bodyparser = require("body-parser");
 var mongoose = require("mongoose");
 var passport = require("passport");
+var LocalStrategy = require("passport-local");
 var TravelStop = require("./models/travel");
 var comments = require("./models/comments");
+var User = require("./models/user");
 var popdata = require("./dbdata");
 
 mongoose.connect("mongodb://localhost/travellers_stop");
 app.set("view engine","ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyparser.urlencoded({extended: true}));
-
 popdata();
+
+
+app.use(require("express-session")({
+    secret: "Once again Rusty wins cutest dog !",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+
 
 app.get("/places",function(req,res){
      TravelStop.find({},function(err,ans){
@@ -88,6 +105,24 @@ app.post("/places/:id/comments",function(req,res){
     });
     
     
+});
+
+app.get("/register",function(req, res) {
+   res.render("register"); 
+});
+
+app.post("/register",function(req, res) {
+   var usname = new User({username: req.body.username});
+   User.register(usname, req.body.password, function(err,ans){
+        if(err){
+            console.log(err);
+            res.render("register");
+        } else {
+            passport.authenticate("local")(req,res,function(){
+                res.redirect("/places");
+            })
+        }
+    });
 });
 
 app.listen(process.env.PORT,process.env.IP,function(){

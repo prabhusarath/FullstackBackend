@@ -1,0 +1,24 @@
+<div class="container">
+    
+<% include partials/header %>
+
+<h1> Sign Up </h1>
+
+<header class="jumbotron">
+        <form style="width:500px; margin: 0 auto; align:center;" action="/register" method="post">
+              <div class="form-group">
+                <label for="exampleInputDestination"> User Name </label>
+                <input type="text" class="form-control" name="username" placeholder="username">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputImage"> Password </label>
+                <input type="text" class="form-control" name="password" placeholder="password">
+              </div>
+          <button type="submit" class="btn btn-md btn-success">Submit</button>
+        </form>
+
+</header>
+
+<% include partials/footer %>
+
+</div>
