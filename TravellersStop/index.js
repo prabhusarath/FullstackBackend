@@ -29,9 +29,13 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-
+app.use(function(req,res,next){
+   res.locals.currUser = req.user; 
+   next();
+});
 
 app.get("/places",function(req,res){
+    //console.log(req.user);
      TravelStop.find({},function(err,ans){
         if(err){
             console.log(err);

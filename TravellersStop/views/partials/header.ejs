@@ -8,7 +8,7 @@
     
     <body>
         
-        <nav class="navbar navbar-inverse">
+        <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="/places">Travellers Stop <span class="glyphicon glyphicon-camera"></span></a>
@@ -19,9 +19,13 @@
       <li><a href="#">Page 2</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
+      <% if(!currUser) { %>
       <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
       <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      <% } else { %>
+      <li>  <a href="#"> Signed <%=  currUser.username  %> </a></li>
       <li><a href="/logout"><span class="glyphicon glyphicon-off"></span> LogOut</a></li>
+      <% } %>
     </ul>
       </div>
     </nav>
