@@ -17,15 +17,22 @@ router.get("/",function(req,res){
 });
 
 
-router.post("/",function(req,res){
+router.post("/",isLoggedIn,function(req,res){
     
     var namevalues = req.body.dest;
     var imgvalues = req.body.imgsrc;
     var dee = req.body.descp;
+    var written = {
+        id : req.user.id,
+        username : req.user.username
+    };
+    
+    //console.log(req.user);
     var newobj = {
         name: namevalues,
         image:imgvalues,
-        descp:dee
+        descp: dee,
+        writtenby: written
     }
     
     TravelStop.create(newobj,function(err,ans){
@@ -39,7 +46,7 @@ router.post("/",function(req,res){
     
     });
 
-router.get("/new",function(req,res){
+router.get("/new",isLoggedIn,function(req,res){
   res.render("places/newplaces");
 });
 
@@ -52,6 +59,13 @@ router.get("/:id",function(req,res){
         }
     });
 });
+
+function isLoggedIn(req,res,next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/login");
+};
 
 module.exports = router;
 
