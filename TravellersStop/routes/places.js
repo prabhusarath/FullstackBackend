@@ -62,17 +62,32 @@ router.get("/:id",function(req,res){
 
 
 router.get("/:id/edit",function(req, res) {
-    console.log(req.params.id);
-    TravelStop.findById(req.params.id,function(err,editcamp){
+    //console.log(req.params.id);
+    
+    if(req.isAuthenticated()){
+       TravelStop.findById(req.params.id,function(err,editcamp){
         if(err){
             res.redirect("/places");
         }
         else{
-            //console.log(editcamp);
-            res.render("places/edit",{campground:editcamp});
-            //console.log(camps);
+            console.log(editcamp);
+            console.log(editcamp.writtenby.id);
+            console.log(req.user._id);
+            
+            if(editcamp.writtenby.id.equals(req.user._id)){
+                res.render("places/edit",{campground:editcamp});
+            }else{
+                res.send("fasfadasfdas");
+            }
         }
-    });
+    }); 
+        
+    }else{
+        console.log("Not Authenticated");
+        res.send("Not Authenticated");
+    }
+    
+    
 });
 
 router.put("/:id",function(req, res) {
