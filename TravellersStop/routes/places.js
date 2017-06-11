@@ -1,5 +1,5 @@
 var express = require("express");
-var router = express.Router();
+var router = express.Router({mergeParams: true});
 
 var TravelStop = require("../models/travel");
 var comments = require("../models/comments"); 
@@ -56,6 +56,32 @@ router.get("/:id",function(req,res){
             console.log(err);
         } else {
             res.render("places/shows",{ccc: found});
+        }
+    });
+});
+
+
+router.get("/:id/edit",function(req, res) {
+    console.log(req.params.id);
+    TravelStop.findById(req.params.id,function(err,editcamp){
+        if(err){
+            res.redirect("/places");
+        }
+        else{
+            //console.log(editcamp);
+            res.render("places/edit",{campground:editcamp});
+            //console.log(camps);
+        }
+    });
+});
+
+router.put("/:id",function(req, res) {
+    TravelStop.findByIdAndUpdate(req.params.id,req.body.editcamp,function(err,updated){
+        if(err){
+            res.redirect("/places");
+        }
+        else{
+            res.redirect("/places/"+ req.params.id);
         }
     });
 });

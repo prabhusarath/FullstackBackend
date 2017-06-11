@@ -1,0 +1,30 @@
+<div class="container">
+    
+<%- include ../partials/header %>
+
+<header class="jumbotron">
+    <h4 style="text-align: center;"> Edit For the place <%= campground.name %> </h4>
+<form style="width:500px; margin: 0 auto; align:center;" action="/places/<%= campground._id %>?_method=PUT" method="post">
+  <div class="form-group">
+    <label for="exampleInputDestination">Destination</label>
+    <input type="text" class="form-control" name="editcamp[name]" value="<%= campground.name %>">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputImage">Image of Destination</label>
+    <input type="text" class="form-control" name="editcamp[image]" value="<%= campground.image %>">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputdesc">Description</label>
+    <input type="text" class="form-control" name="editcamp[descp]" value="<%= campground.descp %>">
+  </div>
+  <button type="submit" class="btn btn-md btn-success">Submit</button>
+</form>
+
+<a href="/places"> <button type="submit" class="btn btn-md btn-info">Move Back </button></a>
+
+</header>
+
+
+<%- include ../partials/footer %>
+
+</div>

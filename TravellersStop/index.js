@@ -4,6 +4,7 @@ var bodyparser = require("body-parser");
 var mongoose = require("mongoose");
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
+var methodOveride = require("method-override");
 var TravelStop = require("./models/travel");
 var comments = require("./models/comments");
 var User = require("./models/user");
@@ -18,6 +19,7 @@ mongoose.connect("mongodb://localhost/travellers_stop");
 app.set("view engine","ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyparser.urlencoded({extended: true}));
+app.use(methodOveride("_method"));
 
 
 //Auto Data Population
