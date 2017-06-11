@@ -18,9 +18,10 @@ mongoose.connect("mongodb://localhost/travellers_stop");
 app.set("view engine","ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyparser.urlencoded({extended: true}));
-popdata();
 
 
+//Auto Data Population
+//popdata();
 
 app.use(require("express-session")({
     secret: "Once again Rusty wins cutest dog !",
@@ -39,9 +40,9 @@ app.use(function(req,res,next){
    next();
 });
 
-app.use(appRoutes);
-app.use(placesRoutes);
-app.use(userRoutes);
+app.use("/",appRoutes);
+app.use("/places",placesRoutes);
+app.use("/places/:id/comments",userRoutes);
 
 app.listen(process.env.PORT,process.env.IP,function(){
    console.log("Travellers Stop has Started Successfully!!");

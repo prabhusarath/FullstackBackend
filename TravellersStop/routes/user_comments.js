@@ -1,5 +1,5 @@
 var express = require("express");
-var router = express.Router();
+var router = express.Router({mergeParams: true});
 var TravelStop = require("../models/travel");
 var comments = require("../models/comments"); 
 
@@ -12,7 +12,7 @@ function isLoggedIn(req,res,next){
 };
 
 
-router.get("/places/:id/comments/new",isLoggedIn ,function(req,res){
+router.get("/new",isLoggedIn ,function(req,res){
     TravelStop.findById(req.params.id,function(err,ans){
         if(err){
             console.log(err);
@@ -22,17 +22,21 @@ router.get("/places/:id/comments/new",isLoggedIn ,function(req,res){
     });
 });
 
-router.post("/places/:id/comments",isLoggedIn,function(req,res){
+router.post("/",isLoggedIn,function(req,res){
     TravelStop.findById(req.params.id,function(err,ans){
         if(err){
             res.redirect("/places");
         } else 
         {
-                        console.log(req.body.view);
-                        comments.create(req.body.view,function(err,viewans){
+                        
+                        comments.create(req.body.comms,function(err,viewans){
                         if(err){
                             console.log(err);
                         } else {
+                            viewans.traveller.id = req.user._id;
+                            viewans.traveller.username = req.user.username;
+                            viewans.save();
+                            
                             ans.views.push(viewans);
                             ans.save();
                             res.redirect("/places/"+ans._id);

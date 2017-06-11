@@ -1,8 +1,14 @@
-var mongoose=require("mongoose")
+var mongoose=require("mongoose");
 
 var schemas =new mongoose.Schema({
-  comment:String,
-  traveller:String
+  texts:String,
+  traveller: {
+    username : String,
+    id:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    }
+  }
 });
 
 module.exports = mongoose.model("Comment",schemas);
