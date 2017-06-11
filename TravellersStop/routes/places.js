@@ -86,6 +86,18 @@ router.put("/:id",function(req, res) {
     });
 });
 
+router.delete("/:id",function(req, res) {
+    TravelStop.findByIdAndRemove(req.params.id,function(err,found){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect("/places");
+        }
+    });
+});
+
+
+
 function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){
         return next();

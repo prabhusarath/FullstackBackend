@@ -20,7 +20,11 @@
                             <p> 
                                 <em>Submitted By <%= ccc.writtenby.username %></em>
                             </p>
-                            <a class="btn btn-warning" href="/places/<%= ccc._id %>/edit"> Edit </a>
+                            <a class="btn btn-xs btn-warning" href="/places/<%= ccc._id %>/edit"> Edit </a>
+                            <hr>
+                            <form action="/places/<%= ccc._id %>?_method=delete" method="post">
+                                <button class="btn btn-xs btn-danger">DELETE</button>
+                            </form>
                 </div>
                 </div>
                 
