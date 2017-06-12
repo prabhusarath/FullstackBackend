@@ -1,0 +1,15 @@
+{
+  "name": "herokudemo",
+  "version": "1.0.0",
+  "description": "A simple applciation deployed in heroku",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sarath Kumar Prabhakaran",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.3"
+  }
+}
