@@ -61,33 +61,11 @@ router.get("/:id",function(req,res){
 });
 
 
-router.get("/:id/edit",function(req, res) {
-    //console.log(req.params.id);
+router.get("/:id/edit",checkplacesownership,function(req, res) {
     
-    if(req.isAuthenticated()){
-       TravelStop.findById(req.params.id,function(err,editcamp){
-        if(err){
-            res.redirect("/places");
-        }
-        else{
-            console.log(editcamp);
-            console.log(editcamp.writtenby.id);
-            console.log(req.user._id);
-            
-            if(editcamp.writtenby.id.equals(req.user._id)){
-                res.render("places/edit",{campground:editcamp});
-            }else{
-                res.send("fasfadasfdas");
-            }
-        }
+    TravelStop.findById(req.params.id,function(err,editcamp){
+        res.render("places/edit",{campground:editcamp});
     }); 
-        
-    }else{
-        console.log("Not Authenticated");
-        res.send("Not Authenticated");
-    }
-    
-    
 });
 
 router.put("/:id",function(req, res) {
@@ -118,7 +96,30 @@ function isLoggedIn(req,res,next){
         return next();
     }
     res.redirect("/login");
-};
+}
+
+function checkplacesownership(req,res,next){
+    
+    if(req.isAuthenticated()){
+       TravelStop.findById(req.params.id,function(err,editcamp){
+        if(err){
+            res.redirect("back");
+        }
+        else{
+            
+            if(editcamp.writtenby.id.equals(req.user._id)){
+                next();
+            }else{
+                res.redirect("back");
+            }
+        }
+    }); 
+        
+    }else{
+        res.redirect("back");
+    }
+    
+}
 
 module.exports = router;
 
