@@ -3,7 +3,6 @@ var router = express.Router({mergeParams: true});
 var passport = require("passport");
 var User = require("../models/user")
 
-
 router.get("/",function(req,res){
     res.render("home");
 });
@@ -43,12 +42,5 @@ router.get("/logout",function(req, res){
     req.logout();
     res.redirect("/places");
 });
-
-function isLoggedIn(req,res,next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-};
 
 module.exports = router;

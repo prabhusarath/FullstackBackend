@@ -1,0 +1,18 @@
+<div class="container">
+    
+<% include ../partials/header %>
+
+<header class="jumbotron">
+<form style="width:500px; margin: 0 auto; align:center;" action="/places/<%= placeid %>/comments/<%= comments._id %>?_method=PUT" method="post">
+  <div class="form-group">
+    <label for="exampleInputDestination">Editing Comments </label>
+    <input type="text" class="form-control" name="comments[texts]" value="<%= comments.texts %>">
+  </div>
+  <button type="submit" class="btn btn-md btn-success">Submit</button>
+</form>
+<a href="/places"> <button type="submit" class="btn btn-md btn-info">Move Back </button></a>
+</header>
+
+<% include ../partials/footer %>
+
+</div>

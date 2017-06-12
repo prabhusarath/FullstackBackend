@@ -2,6 +2,7 @@ var mongoose=require("mongoose")
 
 var schemas =new mongoose.Schema({
   name:String,
+  price:String,
   image:String,
   descp:String,
   writtenby: {

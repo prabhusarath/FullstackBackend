@@ -2,7 +2,9 @@ var express = require("express");
 var router = express.Router({mergeParams: true});
 
 var TravelStop = require("../models/travel");
-var comments = require("../models/comments"); 
+var comments = require("../models/comments");
+
+var authorize = require("../authorize");
 
 router.get("/",function(req,res){
     //console.log(req.user);
@@ -17,9 +19,10 @@ router.get("/",function(req,res){
 });
 
 
-router.post("/",isLoggedIn,function(req,res){
+router.post("/",authorize.isLoggedIn,function(req,res){
     
     var namevalues = req.body.dest;
+    var prices = req.body.price;
     var imgvalues = req.body.imgsrc;
     var dee = req.body.descp;
     var written = {
@@ -30,6 +33,7 @@ router.post("/",isLoggedIn,function(req,res){
     //console.log(req.user);
     var newobj = {
         name: namevalues,
+        price: prices,
         image:imgvalues,
         descp: dee,
         writtenby: written
@@ -46,7 +50,7 @@ router.post("/",isLoggedIn,function(req,res){
     
     });
 
-router.get("/new",isLoggedIn,function(req,res){
+router.get("/new",authorize.isLoggedIn,function(req,res){
   res.render("places/newplaces");
 });
 
@@ -61,14 +65,19 @@ router.get("/:id",function(req,res){
 });
 
 
-router.get("/:id/edit",checkplacesownership,function(req, res) {
+router.get("/:id/edit",authorize.checkplacesownership,function(req, res) {
     
     TravelStop.findById(req.params.id,function(err,editcamp){
+        if(err){
+            res.redirect("/places"); // Error Status Check
+        }
+        else{
         res.render("places/edit",{campground:editcamp});
+        }
     }); 
 });
 
-router.put("/:id",function(req, res) {
+router.put("/:id",authorize.checkplacesownership,function(req, res) {
     TravelStop.findByIdAndUpdate(req.params.id,req.body.editcamp,function(err,updated){
         if(err){
             res.redirect("/places");
@@ -79,7 +88,7 @@ router.put("/:id",function(req, res) {
     });
 });
 
-router.delete("/:id",function(req, res) {
+router.delete("/:id",authorize.checkplacesownership,function(req, res) {
     TravelStop.findByIdAndRemove(req.params.id,function(err,found){
         if(err){
             console.log(err);
@@ -88,38 +97,6 @@ router.delete("/:id",function(req, res) {
         }
     });
 });
-
-
-
-function isLoggedIn(req,res,next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
-
-function checkplacesownership(req,res,next){
-    
-    if(req.isAuthenticated()){
-       TravelStop.findById(req.params.id,function(err,editcamp){
-        if(err){
-            res.redirect("back");
-        }
-        else{
-            
-            if(editcamp.writtenby.id.equals(req.user._id)){
-                next();
-            }else{
-                res.redirect("back");
-            }
-        }
-    }); 
-        
-    }else{
-        res.redirect("back");
-    }
-    
-}
 
 module.exports = router;
 

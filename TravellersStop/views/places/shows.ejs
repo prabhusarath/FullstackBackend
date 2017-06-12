@@ -14,17 +14,19 @@
                 <div class="thumbnail">
                     <img class="img-responive" src="<%= ccc.image %>">
                 <div class="caption-full">
-                            <div class="pull-right"> $ 3.00/night </div>
+                            <div class="pull-right"> <strong>$ <%= ccc.price %>/night</strong> </div>
                             <h4><a><%= ccc.name %></a></h4>
                             <p><%= ccc.descp %> </p>
                             <p> 
                                 <em>Submitted By <%= ccc.writtenby.username %></em>
                             </p>
+                            
+                            <% if(currUser && ccc.writtenby.id.equals(currUser._id)) { %>
                             <a class="btn btn-xs btn-warning" href="/places/<%= ccc._id %>/edit"> Edit </a>
-                            <hr>
-                            <form action="/places/<%= ccc._id %>?_method=delete" method="post">
+                            <form class="delete-form" action="/places/<%= ccc._id %>?_method=delete" method="post">
                                 <button class="btn btn-xs btn-danger">DELETE</button>
                             </form>
+                            <% } %>
                 </div>
                 </div>
                 
@@ -34,6 +36,7 @@
                     </div>
                     <hr>
                     <% ccc.views.forEach(function(vws){ %>
+                    <hr>
                         <div class="row">
                             <div class="col-md-12">
                                 <Strong><%= vws.traveller.username %></Strong>
@@ -41,6 +44,13 @@
                                 <p>
                                     <%= vws.texts %> 
                                 </p>
+            <% if(currUser && vws.traveller.id.equals(currUser._id)) { %>   
+                <a class="btn btn-xs btn-warning" href="/places/<%= ccc._id %>/comments/<%= vws._id %>/edit">Edit Comment</a>
+                
+                <form class="delete-form" action="/places/<%= ccc._id %>/comments/<%= vws._id %>?_method=delete" method="post">
+                    <button class="btn btn-xs btn-danger">DELETE</button>
+                </form>
+            <% } %>    
                             </div>
                         </div>
                     <% }) %>

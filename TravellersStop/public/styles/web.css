@@ -9,3 +9,17 @@
 .thumbnail .caption-full {
   padding: 9px;  
 }
+
+.delete-form{
+ display: inline;   
+}
+
+.copyrights {
+  position: bottom;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}
