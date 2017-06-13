@@ -40,22 +40,22 @@ body {
 }
 
 .slideshow li:nth-child(1) { 
-  background-image: url(https://cdn.pixabay.com/photo/2014/07/10/10/20/golden-gate-bridge-388917_960_720.jpg) 
+  background-image: url(https://source.unsplash.com/h3jarbNzlOg); 
 }
 .slideshow li:nth-child(2) { 
-  background-image: url(https://cdn.pixabay.com/photo/2017/04/21/09/47/new-york-2248133_960_720.jpg);
+  background-image: url(https://source.unsplash.com/t11oyf1K8kA);
   animation-delay: 10s; 
 }
 .slideshow li:nth-child(3) { 
-  background-image: url(https://cdn.pixabay.com/photo/2017/03/07/09/18/yosemite-2123486_960_720.jpg);
+  background-image: url(https://source.unsplash.com/qYgDrCHV1B0);
   animation-delay: 20s; 
 }
 .slideshow li:nth-child(4) { 
-  background-image: url(https://cdn.pixabay.com/photo/2017/05/08/07/28/aerial-2294636_960_720.jpg);
+  background-image: url(https://source.unsplash.com/zjTTu8EtqZ4);
   animation-delay: 30s; 
 }
 .slideshow li:nth-child(5) { 
-  background-image: url(https://cdn.pixabay.com/photo/2017/03/10/09/41/usa-2132296_960_720.jpg);
+  background-image: url(https://source.unsplash.com/q8D4JalMsyU);
   animation-delay: 40s; 
 }
 

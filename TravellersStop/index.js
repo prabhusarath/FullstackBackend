@@ -15,7 +15,9 @@ var placesRoutes = require("./routes/places.js"),
     appRoutes = require("./routes/app.js"),
     userRoutes = require("./routes/user_comments.js");
 
-mongoose.connect("mongodb://localhost/travellers_stop");
+console.log(process.env.DATABASEURL);
+mongoose.connect(process.env.DATABASEURL);
+
 app.set("view engine","ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyparser.urlencoded({extended: true}));
