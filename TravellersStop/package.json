@@ -1,6 +1,9 @@
 {
   "name": "travellersstop",
   "version": "1.0.0",
+  "engines": {
+    "node": "6.11.1"
+  },
   "description": "A Place to Explore Attractions n a Particular Place.",
   "main": "index.js",
   "scripts": {
